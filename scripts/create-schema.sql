@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS clientes (
   cidade VARCHAR(100),
   estado VARCHAR(2),
   cep VARCHAR(10),
-  data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   ativo BOOLEAN DEFAULT true
 );
 
@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS pipeline_status (
   UNIQUE(orcamento_id)
 );
 
--- Tabela de status permitidos
-CREATE TABLE IF NOT EXISTS status_permitidos (
+-- Tabela de status definidos
+CREATE TABLE IF NOT EXISTS status_definicoes (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(50) NOT NULL UNIQUE,
   ordem INTEGER NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS status_permitidos (
 );
 
 -- Inserts dos status obrigatórios
-INSERT INTO status_permitidos (nome, ordem, cor) VALUES
+INSERT INTO status_definicoes (nome, ordem, cor) VALUES
 ('Novo Contato', 1, 'blue'),
 ('Aguardando Resposta', 2, 'yellow'),
 ('Reunião Marcada', 3, 'purple'),
@@ -59,7 +59,7 @@ INSERT INTO status_permitidos (nome, ordem, cor) VALUES
 ON CONFLICT DO NOTHING;
 
 -- Agenda/Eventos table
-CREATE TABLE IF NOT EXISTS eventos (
+CREATE TABLE IF NOT EXISTS eventos_agenda (
   id SERIAL PRIMARY KEY,
   orcamento_id INTEGER NOT NULL REFERENCES orcamentos(id),
   tipo_evento VARCHAR(100) NOT NULL,
@@ -72,4 +72,4 @@ CREATE TABLE IF NOT EXISTS eventos (
 CREATE INDEX IF NOT EXISTS idx_orcamentos_cliente ON orcamentos(cliente_id);
 CREATE INDEX IF NOT EXISTS idx_orcamentos_status ON orcamentos(status);
 CREATE INDEX IF NOT EXISTS idx_pipeline_orcamento ON pipeline_status(orcamento_id);
-CREATE INDEX IF NOT EXISTS idx_eventos_orcamento ON eventos(orcamento_id);
+CREATE INDEX IF NOT EXISTS idx_eventos_orcamento ON eventos_agenda(orcamento_id);
