@@ -1,8 +1,9 @@
-'use client';
+'use client'
 
-import React from "react"
-
-import { LayoutDashboard, Users, FileText, Trello, Calendar } from 'lucide-react'
+import React from 'react'
+import { useRouter } from 'next/navigation'
+import { LayoutDashboard, Users, FileText, Trello, Calendar, LogOut } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 type ViewType = 'dashboard' | 'clients' | 'budgets' | 'pipeline' | 'agenda'
 
@@ -12,6 +13,8 @@ interface SidebarProps {
 }
 
 export function Sidebar({ currentView, onViewChange }: SidebarProps) {
+  const router = useRouter()
+
   const menuItems: { view: ViewType; label: string; icon: React.ReactNode }[] = [
     { view: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
     { view: 'clients', label: 'Clientes', icon: <Users size={20} /> },
@@ -19,6 +22,15 @@ export function Sidebar({ currentView, onViewChange }: SidebarProps) {
     { view: 'pipeline', label: 'Pipeline', icon: <Trello size={20} /> },
     { view: 'agenda', label: 'Agenda', icon: <Calendar size={20} /> },
   ]
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' })
+      router.push('/login')
+    } catch (error) {
+      console.error('Error logging out:', error)
+    }
+  }
 
   return (
     <aside className="w-64 bg-slate-900 text-white flex flex-col border-r border-slate-800">
@@ -44,8 +56,16 @@ export function Sidebar({ currentView, onViewChange }: SidebarProps) {
         ))}
       </nav>
 
-      <div className="p-4 border-t border-slate-800 text-xs text-slate-400">
-        <p>© 2024 CRM Móveis</p>
+      <div className="p-4 border-t border-slate-800 space-y-3">
+        <Button
+          onClick={handleLogout}
+          variant="outline"
+          className="w-full text-red-600 hover:text-red-700 hover:bg-slate-800"
+        >
+          <LogOut size={16} className="mr-2" />
+          Sair
+        </Button>
+        <p className="text-xs text-slate-400 text-center">© 2024 CRM Móveis</p>
       </div>
     </aside>
   )

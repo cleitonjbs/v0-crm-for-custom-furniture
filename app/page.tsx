@@ -8,12 +8,26 @@ import { BudgetsView } from '@/components/budgets-view'
 import { PipelineView } from '@/components/pipeline-view'
 import { AgendaView } from '@/components/agenda-view'
 import { useInitializeDatabase } from '@/hooks/use-init-db'
+import { useAuth } from '@/hooks/use-auth'
 
 type ViewType = 'dashboard' | 'clients' | 'budgets' | 'pipeline' | 'agenda'
 
 export default function Page() {
   useInitializeDatabase()
+  const { isAuthenticated } = useAuth()
   const [currentView, setCurrentView] = useState<ViewType>('dashboard')
+
+  if (isAuthenticated === false) {
+    return null // Will redirect to login
+  }
+
+  if (isAuthenticated === null) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-slate-50">
+        <p className="text-slate-600">Carregando...</p>
+      </div>
+    )
+  }
 
   const renderView = () => {
     switch (currentView) {
