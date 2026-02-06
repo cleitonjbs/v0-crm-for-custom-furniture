@@ -124,7 +124,10 @@ export function PipelineView() {
       <div className="grid grid-cols-1 lg:grid-cols-4 2xl:grid-cols-8 gap-4 pb-8">
         {STATUSES.map((status) => {
           const statusOrcamentos = orcamentos.filter((o) => o.status === status)
-          const totalValor = statusOrcamentos.reduce((acc, o) => acc + o.valor_total, 0)
+          const totalValor = statusOrcamentos.reduce((acc, o) => {
+            const valor = typeof o.valor_total === 'number' ? o.valor_total : parseFloat(o.valor_total as any) || 0
+            return acc + valor
+          }, 0)
 
           return (
             <div key={status} className={`rounded-lg p-4 border-2 ${STATUS_COLORS[status]}`}>
