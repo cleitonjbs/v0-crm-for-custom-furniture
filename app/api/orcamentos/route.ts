@@ -27,7 +27,7 @@ export async function POST(req: Request) {
         ${numero_orcamento},
         ${valor_total},
         ${descricao},
-        ${status || 'prospect'},
+        ${status || 'Novo Contato'},
         ${observacoes},
         NOW() + INTERVAL '45 days'
       )

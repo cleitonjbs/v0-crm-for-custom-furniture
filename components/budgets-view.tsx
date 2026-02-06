@@ -73,14 +73,14 @@ export function BudgetsView() {
   )
 
   const statusColors: Record<string, string> = {
-    prospect: 'bg-yellow-100 text-yellow-800',
-    qualificado: 'bg-blue-100 text-blue-800',
-    proposta: 'bg-purple-100 text-purple-800',
-    negociacao: 'bg-orange-100 text-orange-800',
-    fechado_ganho: 'bg-green-100 text-green-800',
-    fechado_perdido: 'bg-red-100 text-red-800',
-    em_producao: 'bg-indigo-100 text-indigo-800',
-    finalizado: 'bg-gray-100 text-gray-800',
+    'Novo Contato': 'bg-blue-100 text-blue-800',
+    'Aguardando Resposta': 'bg-yellow-100 text-yellow-800',
+    'Reunião Marcada': 'bg-purple-100 text-purple-800',
+    'Projeto em Desenvolvimento': 'bg-cyan-100 text-cyan-800',
+    'Orçamento Enviado': 'bg-orange-100 text-orange-800',
+    'Aguardando Aprovação': 'bg-pink-100 text-pink-800',
+    'Aprovado': 'bg-green-100 text-green-800',
+    'Finalizado': 'bg-gray-100 text-gray-800',
   }
 
   return (

@@ -23,47 +23,47 @@ interface Orcamento {
 }
 
 const STATUSES = [
-  'prospect',
-  'qualificado',
-  'proposta',
-  'negociacao',
-  'fechado_ganho',
-  'fechado_perdido',
-  'em_producao',
-  'finalizado',
+  'Novo Contato',
+  'Aguardando Resposta',
+  'Reunião Marcada',
+  'Projeto em Desenvolvimento',
+  'Orçamento Enviado',
+  'Aguardando Aprovação',
+  'Aprovado',
+  'Finalizado',
 ]
 
 const STATUS_LABELS: Record<string, string> = {
-  prospect: 'Prospect',
-  qualificado: 'Qualificado',
-  proposta: 'Proposta',
-  negociacao: 'Negociação',
-  fechado_ganho: 'Fechado Ganho',
-  fechado_perdido: 'Fechado Perdido',
-  em_producao: 'Em Produção',
-  finalizado: 'Finalizado',
+  'Novo Contato': 'Novo Contato',
+  'Aguardando Resposta': 'Aguardando Resposta',
+  'Reunião Marcada': 'Reunião Marcada',
+  'Projeto em Desenvolvimento': 'Projeto em Desenvolvimento',
+  'Orçamento Enviado': 'Orçamento Enviado',
+  'Aguardando Aprovação': 'Aguardando Aprovação',
+  'Aprovado': 'Aprovado',
+  'Finalizado': 'Finalizado',
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  prospect: 'bg-yellow-50 border-yellow-200',
-  qualificado: 'bg-blue-50 border-blue-200',
-  proposta: 'bg-purple-50 border-purple-200',
-  negociacao: 'bg-orange-50 border-orange-200',
-  fechado_ganho: 'bg-green-50 border-green-200',
-  fechado_perdido: 'bg-red-50 border-red-200',
-  em_producao: 'bg-indigo-50 border-indigo-200',
-  finalizado: 'bg-gray-50 border-gray-200',
+  'Novo Contato': 'bg-blue-50 border-blue-200',
+  'Aguardando Resposta': 'bg-yellow-50 border-yellow-200',
+  'Reunião Marcada': 'bg-purple-50 border-purple-200',
+  'Projeto em Desenvolvimento': 'bg-cyan-50 border-cyan-200',
+  'Orçamento Enviado': 'bg-orange-50 border-orange-200',
+  'Aguardando Aprovação': 'bg-pink-50 border-pink-200',
+  'Aprovado': 'bg-green-50 border-green-200',
+  'Finalizado': 'bg-gray-50 border-gray-200',
 }
 
 const CARD_COLORS: Record<string, string> = {
-  prospect: 'border-yellow-400',
-  qualificado: 'border-blue-400',
-  proposta: 'border-purple-400',
-  negociacao: 'border-orange-400',
-  fechado_ganho: 'border-green-400',
-  fechado_perdido: 'border-red-400',
-  em_producao: 'border-indigo-400',
-  finalizado: 'border-gray-400',
+  'Novo Contato': 'border-blue-400',
+  'Aguardando Resposta': 'border-yellow-400',
+  'Reunião Marcada': 'border-purple-400',
+  'Projeto em Desenvolvimento': 'border-cyan-400',
+  'Orçamento Enviado': 'border-orange-400',
+  'Aguardando Aprovação': 'border-pink-400',
+  'Aprovado': 'border-green-400',
+  'Finalizado': 'border-gray-400',
 }
 
 export function PipelineView() {

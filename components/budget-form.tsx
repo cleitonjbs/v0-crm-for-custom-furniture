@@ -1,7 +1,5 @@
 'use client'
 
-import React from "react"
-
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -27,7 +25,7 @@ export function BudgetForm({ onSubmit, onCancel }: BudgetFormProps) {
     numero_orcamento: '',
     valor_total: '',
     descricao: '',
-    status: 'prospect',
+    status: 'Novo Contato',
     observacoes: '',
   })
 
@@ -65,20 +63,20 @@ export function BudgetForm({ onSubmit, onCancel }: BudgetFormProps) {
       numero_orcamento: '',
       valor_total: '',
       descricao: '',
-      status: 'prospect',
+      status: 'Novo Contato',
       observacoes: '',
     })
   }
 
   const statuses = [
-    'prospect',
-    'qualificado',
-    'proposta',
-    'negociacao',
-    'fechado_ganho',
-    'fechado_perdido',
-    'em_producao',
-    'finalizado',
+    'Novo Contato',
+    'Aguardando Resposta',
+    'Reunião Marcada',
+    'Projeto em Desenvolvimento',
+    'Orçamento Enviado',
+    'Aguardando Aprovação',
+    'Aprovado',
+    'Finalizado',
   ]
 
   return (
