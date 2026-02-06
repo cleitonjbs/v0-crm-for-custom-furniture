@@ -77,7 +77,8 @@ export async function generateBudgetPDF(orcamento: Orcamento) {
   doc.setFillColor(240, 240, 240)
   doc.rect(20, yPosition, 170, 12, 'F')
   doc.setTextColor(...primaryColor)
-  doc.text(`VALOR TOTAL: R$ ${orcamento.valor_total.toFixed(2)}`, 100, yPosition + 8, {
+  const valorFormatado = (typeof orcamento.valor_total === 'number' ? orcamento.valor_total : parseFloat(orcamento.valor_total as any) || 0).toFixed(2)
+  doc.text(`VALOR TOTAL: R$ ${valorFormatado}`, 100, yPosition + 8, {
     align: 'center',
   })
 
