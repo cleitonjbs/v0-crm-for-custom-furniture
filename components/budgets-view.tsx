@@ -146,7 +146,7 @@ export function BudgetsView() {
                         {orcamento.descricao}
                       </p>
                       <div className="flex justify-between text-sm text-slate-500">
-                        <span>Valor: R$ {orcamento.valor_total.toFixed(2)}</span>
+                        <span>Valor: R$ {(typeof orcamento.valor_total === 'number' ? orcamento.valor_total : parseFloat(orcamento.valor_total as any) || 0).toFixed(2)}</span>
                         <span>
                           Prazo: {new Date(orcamento.data_prazo).toLocaleDateString('pt-BR')}
                         </span>
