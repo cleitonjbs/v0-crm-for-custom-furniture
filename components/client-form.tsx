@@ -8,10 +8,11 @@ import { Label } from '@/components/ui/label'
 interface ClientFormProps {
   onSubmit: (data: any) => void
   onCancel: () => void
+  initialData?: any
 }
 
-export function ClientForm({ onSubmit, onCancel }: ClientFormProps) {
-  const [formData, setFormData] = useState({
+export function ClientForm({ onSubmit, onCancel, initialData }: ClientFormProps) {
+  const [formData, setFormData] = useState(initialData || {
     nome: '',
     email: '',
     telefone: '',
@@ -21,38 +22,76 @@ export function ClientForm({ onSubmit, onCancel }: ClientFormProps) {
     estado: '',
     cep: '',
   })
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const formatTelefone = (value: string) => {
+    const cleaned = value.replace(/\D/g, '')
+    if (cleaned.length <= 10) {
+      return cleaned.replace(/(\d{2})(\d{0,8})/, '$1 $2')
+    }
+    return cleaned.slice(0, 11).replace(/(\d{2})(\d{5})(\d{4})/, '$1 $2-$3')
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    const { name, value } = e.target
+    let formattedValue = value
+
+    if (name === 'telefone') {
+      formattedValue = formatTelefone(value)
+    }
+
+    setFormData({ ...formData, [name]: formattedValue })
+  }
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {}
+
+    if (!formData.nome || formData.nome.trim().length < 3) {
+      newErrors.nome = 'Nome é obrigatório e deve ter no mínimo 3 letras'
+    }
+
+    if (!formData.telefone) {
+      newErrors.telefone = 'Telefone é obrigatório (xx xxxxx-xxxx)'
+    } else if (!/^\d{2} \d{5}-\d{4}$/.test(formData.telefone)) {
+      newErrors.telefone = 'Telefone inválido. Use o formato: xx xxxxx-xxxx'
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    onSubmit(formData)
-    setFormData({
-      nome: '',
-      email: '',
-      telefone: '',
-      cpf_cnpj: '',
-      endereco: '',
-      cidade: '',
-      estado: '',
-      cep: '',
-    })
+    if (validateForm()) {
+      onSubmit(formData)
+      if (!initialData) {
+        setFormData({
+          nome: '',
+          email: '',
+          telefone: '',
+          cpf_cnpj: '',
+          endereco: '',
+          cidade: '',
+          estado: '',
+          cep: '',
+        })
+      }
+    }
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="nome">Nome</Label>
+          <Label htmlFor="nome">Nome *</Label>
           <Input
             id="nome"
             name="nome"
             value={formData.nome}
             onChange={handleChange}
-            required
+            placeholder="Mínimo 3 letras"
           />
+          {errors.nome && <p className="text-red-500 text-sm mt-1">{errors.nome}</p>}
         </div>
         <div>
           <Label htmlFor="email">Email</Label>
@@ -62,18 +101,18 @@ export function ClientForm({ onSubmit, onCancel }: ClientFormProps) {
             type="email"
             value={formData.email}
             onChange={handleChange}
-            required
           />
         </div>
         <div>
-          <Label htmlFor="telefone">Telefone</Label>
+          <Label htmlFor="telefone">Telefone *</Label>
           <Input
             id="telefone"
             name="telefone"
             value={formData.telefone}
             onChange={handleChange}
-            required
+            placeholder="xx xxxxx-xxxx"
           />
+          {errors.telefone && <p className="text-red-500 text-sm mt-1">{errors.telefone}</p>}
         </div>
         <div>
           <Label htmlFor="cpf_cnpj">CPF/CNPJ</Label>
@@ -82,7 +121,6 @@ export function ClientForm({ onSubmit, onCancel }: ClientFormProps) {
             name="cpf_cnpj"
             value={formData.cpf_cnpj}
             onChange={handleChange}
-            required
           />
         </div>
         <div className="col-span-2">
@@ -92,7 +130,6 @@ export function ClientForm({ onSubmit, onCancel }: ClientFormProps) {
             name="endereco"
             value={formData.endereco}
             onChange={handleChange}
-            required
           />
         </div>
         <div>
@@ -102,7 +139,6 @@ export function ClientForm({ onSubmit, onCancel }: ClientFormProps) {
             name="cidade"
             value={formData.cidade}
             onChange={handleChange}
-            required
           />
         </div>
         <div>
@@ -113,7 +149,6 @@ export function ClientForm({ onSubmit, onCancel }: ClientFormProps) {
             value={formData.estado}
             onChange={handleChange}
             maxLength={2}
-            required
           />
         </div>
         <div>
@@ -123,7 +158,6 @@ export function ClientForm({ onSubmit, onCancel }: ClientFormProps) {
             name="cep"
             value={formData.cep}
             onChange={handleChange}
-            required
           />
         </div>
       </div>
@@ -133,7 +167,7 @@ export function ClientForm({ onSubmit, onCancel }: ClientFormProps) {
           Cancelar
         </Button>
         <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
-          Salvar Cliente
+          {initialData ? 'Atualizar Cliente' : 'Salvar Cliente'}
         </Button>
       </div>
     </form>
