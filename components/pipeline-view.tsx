@@ -137,7 +137,7 @@ export function PipelineView() {
                   {statusOrcamentos.length} orçamento(s)
                 </p>
                 <p className="text-xs font-semibold text-slate-700 mt-1">
-                  R$ {(typeof totalValor === 'number' ? totalValor : 0).toFixed(2)}
+                  R$ {typeof totalValor === 'number' && !isNaN(totalValor) ? totalValor.toFixed(2) : '0.00'}
                 </p>
               </div>
 
