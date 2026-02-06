@@ -154,7 +154,7 @@ export function PipelineView() {
                       {orcamento.cliente_nome}
                     </p>
                     <p className="text-sm font-bold text-slate-700 mt-2">
-                      R$ {orcamento.valor_total.toFixed(2)}
+                      R$ {(typeof orcamento.valor_total === 'number' ? orcamento.valor_total : parseFloat(orcamento.valor_total as any) || 0).toFixed(2)}
                     </p>
 
                     <div className="mt-3">
